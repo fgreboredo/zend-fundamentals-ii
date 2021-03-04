@@ -3,55 +3,26 @@
 
 namespace CarDbApp\Domain;
 
+use CarDbApp\Domain\Vehicle;
+use CarDbApp\Domain\PetrolEngine;
 
-class Car
+class Car extends Vehicle
 {
+    const STANDARD_NUMBER_OF_WHEELS =  4;
 
-    /**
-     * In some cases we coud have 6 (Tyrrell P34), in some cases 3 (Reliant Robin)
-     */
-    const STANDARD_NUMBER_OF_WHEELS = 4;
+    const PETROL_ENGINE = 'petrol';
 
-    /**
-     * @var string
-     */
-    private $engineStatus = '';
-
-    /**
-     * Car constructor.
-     */
-    public function __construct(public string $make, public string $model)
+    public function __construct(string $make = '', string $model = '')
     {
-        $this->engineStatus = "brand new";
+        parent::__construct($make, $model);
+        $this->engine = new PetrolEngine('Petrol Inline 4 cylinders');
+        $this->numberOfWheels = self::STANDARD_NUMBER_OF_WHEELS;
     }
 
-    public function startEngine(){
-        $this->setEngineStatus('running');
-    }
 
-    public function stopEngine(){
-        $this->setEngineStatus('stopped');
-    }
-
-    /**
-     *
-     * @param string $engineStatus
-     */
-    protected function setEngineStatus($engineStatus) {
-        $this->engineStatus = $engineStatus;
-    }
-
-    /**
-     * Expected to be rewritten in subclasses
-     */
-    protected function fillUpTank(){
-
-    }
-
-    public function __toString(): string
+    public function makeNoise(): void
     {
-        return sprintf("I am a %s %s, and my engine is %s", $this->make, $this->model, $this->engineStatus);
+        $this->engine->makeNoise();
     }
-
 
 }
