@@ -4,6 +4,8 @@
 namespace CarDbApp\Domain;
 
 
+use CarDbApp\Exceptions\UnstartableCarException;
+
 abstract class Engine
 {
 
@@ -28,7 +30,13 @@ abstract class Engine
 
     public abstract function setEngineType(string $engineType);
 
-    public abstract function startEngine() : void;
+    public function startEngine() : void
+    {
+        if (self::ENGINE_STATUS_BURNT === $this->engineStatus)
+        {
+            throw new UnstartableCarException();
+        }
+    }
 
     public abstract function stopEngine() : void;
 

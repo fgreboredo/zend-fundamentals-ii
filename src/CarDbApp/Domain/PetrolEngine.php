@@ -66,7 +66,7 @@ class PetrolEngine extends Engine
         }
     }
 
-    protected function setEngineStatus(int $engineStatus): void
+    public function setEngineStatus(int $engineStatus): void
     {
         $this->engineStatus = $engineStatus;
     }
